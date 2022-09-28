@@ -21,9 +21,10 @@ function encodePaginationTokens(params, response) {
 
   if (response.previous) {
     let previousPaginatedField = objectPath.get(response.previous, params.paginatedField);
-    if (params.sortCaseInsensitive) {
-      previousPaginatedField = previousPaginatedField?.toLowerCase?.() ?? '';
-    }
+    // Not working!!
+    // if (params.sortCaseInsensitive) {
+    //   previousPaginatedField = previousPaginatedField?.toLowerCase?.() ?? '';
+    // }
     if (shouldSecondarySortOnId) {
       response.previous = bsonUrlEncoding.encode([previousPaginatedField, response.previous._id]);
     } else {
@@ -32,9 +33,10 @@ function encodePaginationTokens(params, response) {
   }
   if (response.next) {
     let nextPaginatedField = objectPath.get(response.next, params.paginatedField);
-    if (params.sortCaseInsensitive) {
-      nextPaginatedField = nextPaginatedField?.toLowerCase?.() ?? '';
-    }
+    // Not working!!
+    // if (params.sortCaseInsensitive) {
+    //   nextPaginatedField = nextPaginatedField?.toLowerCase?.() ?? '';
+    // }
     if (shouldSecondarySortOnId) {
       response.next = bsonUrlEncoding.encode([nextPaginatedField, response.next._id]);
     } else {
@@ -127,7 +129,7 @@ module.exports = {
         return { _id: { $lt: op } };
       }
     } else {
-      const field = params.sortCaseInsensitive ? '__lc' : params.paginatedField;
+      const field = params.paginatedField;
 
       const notUndefined = { [field]: { $exists: true } };
       const onlyUndefs = { [field]: { $exists: false } };
